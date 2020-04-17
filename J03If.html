@@ -36,6 +36,7 @@
 
         document.write(result);
 
+        // 함수를 선언할 때는 function 키워드를 사용한다.
         function getGrade() {
             var kor = parseInt(document.getElementById("kor").value);
             var eng = parseInt(document.getElementById("eng").value);
@@ -49,7 +50,6 @@
             else if (avg > 70) strGrade = "C학점";
             else if (avg > 60) strGrade = "D학점";
             else strGrade = "<del>F학점</del>"
-
 
             document.getElementById("gradePrint").innerHTML = strGrade;
         }
