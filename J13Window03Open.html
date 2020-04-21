@@ -14,10 +14,42 @@
             */
             function findZipcode() {
                 // 스크롤바만 보임상태로 설정.
-                window.open("./pages/zipcode.html", "Zip", "width=400, heigt=400, left=500, top=100, location=no, toolbar=no, menubar=no, scrollbars=yes, resizable=no");
+                window.open("./pages/zipcode.html", "Zip", "width=400, heigt=400, left=200, top=150, location=no, toolbar=no, menubar=no, scrollbars=yes, resizable=no");
                 /*
                 대부분의 속성은 익스플로러에서만 정용된다. 크롬이나 파이어폭스에서는 적용되지 않는다.
                 */
+            }
+
+            // open()함수가 반환하는 윈도우 객체를 저장하기 위한 전역변수
+            var winObj1;
+
+            /*
+            창의 제어
+            - 부모창에서 자식 팝업창을 제어할 때는 팝업창의 참조변수를 이용한다.
+            - 즉 open()함수가 반환하는 윈도우 객체를 이용해서 제어할 수 있다.
+            */
+            function popFirst() {
+                winObj1 = window.open("./pages/popup01.html", "pop1", "width=300, heigt= 300, left=0, top=0");
+            }
+            function popClose() {
+                alert("팝업창1을 닫습니다.");
+                winObj1.close();
+            }
+
+            function openChild1() {
+                window.open("./pages/openChild1st.html", "child1", "width=300, heigt=300, left = 0, top = 0");
+            }
+            function screenCenterPop() {
+                // 모니터의 해상도를 구해온다.
+                var s_width = window.screen.width;
+                var s_height = window.screen.height;
+
+                alert("모니터해상도 > 가로 : " + s_width + ", 세로 : " + s_height);
+
+                var leftVar = s_width / 2 - 300 / 2;
+                var topVar = s_height / 2 - 300 / 2;
+
+                window.open("./pages/popup01.html", "popup", "width=300, heigt=300. left=" + leftVar + ", top=" + topVar);
             }
         </script>
     </head>
@@ -48,5 +80,21 @@
                 </tr>
             </table>
         </fieldset>
+
+        <h2>부모창에서 팝업창 제어하기</h2>
+        <p style="text-align: center;">
+            <button onclick="popFirst()">첫 번째 팝업창 열기</button>
+            <button onclick="popClose()">첫 번째 팝업창 닫기</button>
+        </p>
+
+        <h2>화면의 해상도 얻어와서 스크린중간에 팝업띄우기</h2>
+        <p style="text-align: center;">
+            <button onclick="screenCenterPop()">화면중간에팝업띄우기</button>
+        </p>
+
+        <h2>팝업의 팝업창에서 부모창 제어하기</h2>
+        <p style="text-align: center;">
+            <input type="button" id="btnFirst" onclick="openChild1();" value="첫번째팝업창열기" />
+        </p>
     </body>
 </html>
