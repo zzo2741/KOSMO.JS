@@ -36,29 +36,50 @@
                 }
             }
 
+            //로또번호 생성하기
             function getLotto() {
+                //로또번호를 문자열로 연결해서 출력하기 위한변수
                 var lottoStr = "";
+                //로또번호를 저장하기 위한 배열
                 var lottoNum = [0, 0, 0, 0, 0, 0];
+                //로또배열의 인덱스로 사용할 변수
                 var index = 0;
+                //중복값 확인용 변수
                 var flag = false;
 
+                /*
+                배열에 중복된 난수가 없을때 하나씩 채워지면서 +1처리됨
+                총 6번 반복 생성.
+                */
                 while (index < 6) {
+                    //1~45사이의 난수 생성
                     var randomNum = parseInt(Math.random() * 45) + 1;
+                    /*
+                    배열에 저장된 요소와 난수를 비교하여 중복이 확인되면 flag를 true로 변경한다. 
+                    */
                     for (var i = 0; i < lottoNum.length; i++) {
                         if (lottoNum[i] == randomNum) {
                             flag = true;
+                            break; //중복값이 확인되면 즉시 루프 탈출
                         }
                     }
 
                     if (flag == true) {
+                        /*
+                        중복값이 있다면 while문의 처음으로 돌아가서 난수를 다시 생성한다. 단 flag를 false로 초기화해야한다.
+                        */
                         flag = false;
                         continue;
                     } else {
+                        /*
+                        중복된 값이 없다면 배열을 채워주고 index를 +1 증가시킨다.
+                        */
                         lottoNum[index++] = randomNum;
                     }
                 }
+                // 오름차순 정렬
                 setOrdering(lottoNum);
-
+                // 로또 배열 출력
                 for (let i = 0; i < lottoNum.length; i++) {
                     lottoStr += lottoNum[i] + "&nbsp;";
                 }
