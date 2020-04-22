@@ -1,40 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>J17CssControl.html</title>
-    </head>
-    <body>
-        <h2>JS로 CSS제어하기</h2>
-        <input type="button" value="글꼴바꾸기" onclick="setFont();" />
-        <fieldset>
-            <legend>신문기사</legend>
-            <button onclick="fnArticle('+')">+</button>
-            <button onclick="fnArticle('-')">-</button>
-            <button onclick="fnArticle('R')">Red</button>
-            <button onclick="fnArticle('G')">Green</button>
-            <button onclick="fnArticle('B')">Blue</button>
-            <button onclick="fnArticle('')">Black</button>
-            <button onclick="fnArticle('Bo')">볼드체</button>
-            <button onclick="fnArticle('No')">보통체</button>
-            <button onclick="fnArticle('Ce')">가운데정렬</button>
-            <button onclick="fnArticle('Le')">좌측정렬</button>
-        </fieldset>
-        <p style="font-size: 15px;" id="article">
-            오늘의 뉴스<br />
-            EBS 연습생 출신 가수 펭수가 데뷔 하루 만에 '지니 일간차트 1위'에 올랐다.
-            <br />
-            지니뮤직은 펭수가 전날 아티스트 데뷔 후 단 하루 만인 22일 지니 일간차트 1위에 랭크됐다고 밝혔다. 펭수는 자신의 SNS에서 "감사하고 사랑한다. 펭러뷰"라고 감사 인사를 전했다.
-            <br />
-            '빌보드 프로젝트 Vol. 1'는 지니뮤직이 EBS와 함께 발매해 선보인 펭수의 첫 번째 디지털 싱글이다. 힙합 뮤지션 타이거 JK와 비지, 비비 등이 협업했다.
-            <br />
-            차트 1위에 오른 타이틀곡 '펭수로 하겠습니다(This is PENGSOO)'는 펭수의 빌보드 진출 염원을 담은 곡이다. 음원 수익은 '세계 펭귄의 날'을 기념해 환경 단체에 기부할 예정이다.
-            <br />
-            이해일 지니뮤직 시너지협력단장은 "크리에이터 펭수의 보이스 매력이 힙합 뮤지션들과 조화를 이루며 팬들의 마음을 저격한 듯싶다"며 "랩과 요들송을 접목한 독특한 멜로디 또한 들을수록 빠져들게
-            만드는 인기 비결의 하나"라고 말했다.
-            <br />
-            펭수의 첫 번째 디지털 싱글 타이틀곡 '펭수로 하겠습니다'는 지니와 벅스 1위, 소리바다 17위, 멜론 29위 등에 오르며 인기몰이를 하고 있다.
-        </p>
-    </body>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>J17CssControl.html</title>
+    <script>
+        var pTag, pSize, count = 0,
+            pFamily = ["Verdana", "굴림체", "휴먼옛체", "궁서", "Impact"];
+
+        window.onload = function () {
+            pTag = document.getElementById("article");
+            pSize = parseInt(pTag.style.fontSize);
+        }
+
+        function fnArticle(flag) {
+            switch (flag) {
+                case "+":
+                    pSize += 10;
+                    pTag.style.fontSize = pSize + "px";
+                    break;
+                case "-":
+                    pSize -= 10;
+                    pTag.style.fontSize = pSize + "px";
+                    break;
+                case "R":
+                    pTag.style.color = "red";
+                    break;
+                case "G":
+                    pTag.style.color = "green";
+                    break;
+                case "B":
+                    pTag.style.color = "blue";
+                    break;
+                case "Bo":
+                    pTag.style.fontWeight = "bold";
+                    break;
+                case "No":
+                    pTag.style.fontWeight = "normal";
+                    break;
+                case "Ce":
+                    pTag.style.textAlign = "center";
+                    break;
+                case "Le":
+                    pTag.style.textAlign = "left";
+                    break;
+                case "Ri":
+                    pTag.style.textAlign = "right";
+                    break;
+                case "Ff":
+                    pTag.style.fontFamily = pFamily[count];
+                    count++;
+                    if (count == 5) {
+                        count = 0;
+                    }
+                    break;
+                default:
+                    pTag.style.color = "black"
+            }
+        }
+
+        // function setFont() {
+        //     pTag.style.fontFamily = pFamily[count];
+        //     count++;
+        //     if (count == 5) {
+        //         count = 0;
+        //     }
+        // }
+        var fontToggle = 0; //폰트 토글을 위한 전역변수
+        function setFont() {
+            //문제에서 주어진 폰트를 배여롤 선언
+            var fontArray = ["Verdana", "굴림체", "휴먼옛체", "궁서", "Impact"];
+            //정수를 5로 나누면 나머지는 0~4까지 생성
+            var fontIndex = fontToggle % 5;
+            //위에서 구한 수를 인덱스로 폰트 설정
+            pTag.style.fontFamily = fontArray[fontIndex];
+            //함수를 호출할 때 마다 1증가
+            fontToggle++
+        }
+    </script>
+</head>
+
+<body>
+    <!-- 
+    문제] 글꼴바꾸기 버튼을 계속 누를때마다 아래 5가지
+    폰트가 토글되어 적용될수 있도록 함수를 정의하시오.
+    글꼴 : Verdana, 굴림체, 휴먼옛체, 궁서, Impact
+
+    function setFont(){
+    실행부;
+    }
+    -->
+
+    <h2>JS로 CSS제어하기</h2>
+    <input type="button" value="글꼴바꾸기" onclick="setFont();" />
+    <fieldset>
+        <legend>신문기사</legend>
+        <button onclick="fnArticle('+')">+</button>
+        <button onclick="fnArticle('-')">-</button>
+        <button onclick="fnArticle('R')">Red</button>
+        <button onclick="fnArticle('G')">Green</button>
+        <button onclick="fnArticle('B')">Blue</button>
+        <button onclick="fnArticle('')">Black</button>
+        <button onclick="fnArticle('Bo')">볼드체</button>
+        <button onclick="fnArticle('No')">보통체</button>
+        <button onclick="fnArticle('Ce')">가운데정렬</button>
+        <button onclick="fnArticle('Le')">좌측정렬</button>
+        <button onclick="fnArticle('Ri')">우측정렬</button>
+        <button onclick="fnArticle('Ff')">글꼴바꾸기</button>
+    </fieldset>
+    <p style="font-size: 15px; font-family: 바탕;" id="article">
+        오늘의 뉴스<br />
+        EBS 연습생 출신 가수 펭수가 데뷔 하루 만에 '지니 일간차트 1위'에 올랐다.
+        <br />
+        지니뮤직은 펭수가 전날 아티스트 데뷔 후 단 하루 만인 22일 지니 일간차트 1위에 랭크됐다고 밝혔다. 펭수는 자신의 SNS에서 "감사하고 사랑한다. 펭러뷰"라고 감사 인사를 전했다.
+        <br />
+        '빌보드 프로젝트 Vol. 1'는 지니뮤직이 EBS와 함께 발매해 선보인 펭수의 첫 번째 디지털 싱글이다. 힙합 뮤지션 타이거 JK와 비지, 비비 등이 협업했다.
+        <br />
+        차트 1위에 오른 타이틀곡 '펭수로 하겠습니다(This is PENGSOO)'는 펭수의 빌보드 진출 염원을 담은 곡이다. 음원 수익은 '세계 펭귄의 날'을 기념해 환경 단체에 기부할 예정이다.
+        <br />
+        이해일 지니뮤직 시너지협력단장은 "크리에이터 펭수의 보이스 매력이 힙합 뮤지션들과 조화를 이루며 팬들의 마음을 저격한 듯싶다"며 "랩과 요들송을 접목한 독특한 멜로디 또한 들을수록 빠져들게
+        만드는 인기 비결의 하나"라고 말했다.
+        <br />
+        펭수의 첫 번째 디지털 싱글 타이틀곡 '펭수로 하겠습니다'는 지니와 벅스 1위, 소리바다 17위, 멜론 29위 등에 오르며 인기몰이를 하고 있다.
+    </p>
+</body>
+
 </html>
