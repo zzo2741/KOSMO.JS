@@ -71,10 +71,14 @@
                     } else {
                         console.log(hidden.value);
                         var cal = eval(hidden.value);
+                        // document.getElementById("lcd").innerHTML = cal.toFixed(2);
                         document.getElementById("lcd").innerHTML = cal;
-                        console.log(screenStr, hidden.value, cal);
+                        screenStr = "";
+                        totalStr = cal;
+                        console.log(screenStr, hidden.value, cal, totalStr);
                     }
                 } else if (value == "+" || value == "-" || value == "/" || value == "*") {
+                    // 만약 끝에 +-/*가 끝에 있으면 새로운 연산자로 대체시키기
                     hidden.value += value;
                     screenStr = "";
                     console.log(screenStr, hidden.value);
@@ -86,13 +90,15 @@
                 }
             }
             function backSpace() {
-                if (screenStr.length != 0) {
+                var temp = hidden.value;
+                if (screenStr.length > 0) {
                     screenStr = screenStr.substring(0, screenStr.length - 1);
                     hidden.value = hidden.value.substring(0, hidden.value.length - 1);
                     document.getElementById("lcd").innerHTML = screenStr;
                     console.log(screenStr, hidden.value);
-                } else {
-                    hidden.value += "0";
+                } else if (temp[temp.length - 1] == "+" || temp[temp.length - 1] == "-" || temp[temp.length - 1] == "/" || temp[temp.length - 1] == "*") {
+                    hidden.value = hidden.value.substring(0, hidden.value.length - 1);
+                    console.log(screenStr, hidden.value);
                 }
             }
             function clearScreen() {
